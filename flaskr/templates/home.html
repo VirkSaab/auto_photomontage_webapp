@@ -26,6 +26,13 @@
         </div>
         <div class="col">
             <h3>Output</h3>
+            <div class="container">
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button> {{ message }}
+                </div>
+                {% endfor %} {% block page_content %}{% endblock %}
+            </div>
         </div>
     </div>
 
@@ -49,7 +56,18 @@
                 headers: new Headers({
                     "content-type": "application/json"
                 })
-            })
+            }).then(function(response) {
+                if (response.status !== 200) {
+                    console.log("Error! Response not 200.")
+                }
+
+                response.json().then(function(data) {
+                    // console.log(data);
+                    if (data.num_images < 2) {
+                        alert("At least 2 images are required.")
+                    }
+                });
+            });
         }
     </script>
 </body>
