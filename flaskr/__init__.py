@@ -1,6 +1,6 @@
 import os, io, cv2
 import numpy as np
-from flask import Flask, config, render_template, request, make_response
+from flask import Flask, config, render_template, request, make_response, url_for, redirect
 from .merge_images import *
 
 def create_app(test_config=None):
@@ -32,6 +32,7 @@ def create_app(test_config=None):
     
     global images
     images = {}
+    OUTPUT_PATH = "flaskr/static/imgs/processed.png"
 
     @app.route('/', methods=["POST", "GET"])
     def homepage():
@@ -55,15 +56,18 @@ def create_app(test_config=None):
 
         if req["runButton"] == "clicked":
             num_images = len(images)
-            
+            processing_complete = False
             #TODO: Add processing function here
-            output_image = make_collage(images)
-            
+            if num_images >= 2:
+                output_image = make_collage(images, req["orientation"])
+                print(f"OUTPUT IMAGE: {output_image.shape}")
+                cv2.imwrite(OUTPUT_PATH, output_image)
+                processing_complete = True
             # return the output image
             res_output = {
-                "output": output_image,
+                # "output": output_image,
                 "num_images": num_images,
-                "processing_complete": True
+                "processing_complete": processing_complete
             }
             res = make_response(res_output, 200)
 
@@ -71,7 +75,12 @@ def create_app(test_config=None):
             res = make_response("Error", 201)
         return res
 
-    
+    @app.route("/checks", methods=["POST"])
+    def check_before_running():
+        req = request.get_json()
+        if req["remove"] == "remove":
+            os.remove(OUTPUT_PATH)
+        return make_response({"status": 200}, 200)  
 
     return app
 

@@ -11,7 +11,7 @@
 
 <body>
     <div class="container-fluid text-center">
-        <h2>Auto Sorted Image Stitcher</h2>
+        <h2>Auto Photo Montage</h2>
         <hr>
     </div>
     <div class="row mt-4 container-fluid">
@@ -22,17 +22,23 @@
             </div>
         </div>
         <div class="col-md-auto text-center align-self-md-center">
-            <button type="button" class="btn btn-success shadow" onclick=startProcessing()>Run</button>
+            <button type="button" class="btn btn-success shadow" onclick=makePortraitMontage()>Make Portrait Montage</button>
+            <br><br>
+            <button type="button" class="btn btn-info shadow" onclick=makeLandscapeMontage()>Make Landscape Montage</button>
         </div>
         <div class="col">
             <h3>Output</h3>
-            <div class="container">
+            <div class="container-fluid" id="outputID">
+                <!-- Processed image will appear here -->
+            </div>
+            <!-- <img src="/static/imgs/processed.png" alt="Italian Trulli"> -->
+            <!-- <div class="container">
                 {% for message in get_flashed_messages() %}
                 <div class="alert alert-warning">
                     <button type="button" class="close" data-dismiss="alert">&times;</button> {{ message }}
                 </div>
                 {% endfor %} {% block page_content %}{% endblock %}
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -42,10 +48,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
     <script type="text/javascript">
-        function startProcessing() {
+        // Remove previously generated output
+        fetch(`${window.origin}/checks`, {
+            method: "POST",
+            credentials: "include",
+            body: JSON.stringify({
+                "remove": "remove"
+            }),
+            cache: "no-cache",
+            headers: new Headers({
+                "content-type": "application/json"
+            })
+        })
+
+
+        function makePortraitMontage() {
+            startProcessing(orientation = "portrait")
+        }
+
+        function makeLandscapeMontage() {
+            startProcessing(orientation = "landscape")
+        }
+
+        function displayOutputImage() {
+            var outputImg = document.createElement("img")
+            outputImg.src = "/static/imgs/processed.png";
+            outputImg.style = "max-width:100%; max-height:35rem;";
+            outputImg.alt = "Output.png";
+            console.log("outputImg:", outputImg);
+            document.getElementById("outputID").appendChild(outputImg);
+        }
+
+        function startProcessing(orientation) {
 
             var entry = {
-                "runButton": "clicked"
+                "runButton": "clicked",
+                "orientation": orientation
             };
 
             fetch(`${window.origin}/output`, {
@@ -65,6 +103,9 @@
                     // console.log(data);
                     if (data.num_images < 2) {
                         alert("At least 2 images are required.")
+                    } else if (data.processing_complete === true) {
+                        displayOutputImage()
+                            // alert("Processing complete")
                     }
                 });
             });
