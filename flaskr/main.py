@@ -1,7 +1,9 @@
 """
-    #     https://www.programmersought.com/article/98723609770/
-    #     """
-
+Auto Photo Montage image processing file
+Author: Jitender Singh Virk
+Github ID: VirkSaab
+Last updated: 2 Jan 2021
+"""
 from typing import Tuple
 import cv2
 import numpy as np
@@ -11,7 +13,6 @@ from collections import OrderedDict
 def make_collage(images:dict) -> np.ndarray: # image dims: H, W, C
     # for name, image in images.items():
         # print(f"[MAIN] name: {name}, shape: {image.shape}")
-
     mont = MakeMontage(images)
     return mont.output #final_image
 
@@ -54,7 +55,7 @@ class MakeMontage:
         self.E_obj_dict = self.compute_image_objectness(self.images)
         # * E_trans
         self.E_trans_dict = self.compute_image_transition(self.images)
-        
+
         # Set Energies
         self.energies = {name: self.get_image_energy(name) for name in self.images.keys()}
         # print("self.energies:", len(self.energies), self.energies)
@@ -122,12 +123,12 @@ class MakeMontage:
     def merge_one_pair(self, pair:dict, resolution:str="min") -> dict:
         pair_name = list(pair.keys())[0]
         pair = pair[pair_name]
-        
+
         img1_height, img1_width, _ = pair[0].shape
         img2_height, img2_width, _ = pair[1].shape
         max_height = max(img1_height, img2_height)
         max_width  = max(img1_width, img2_width)
-        
+
         h_ratio = abs(max_height / (img1_width + img2_width) - 0.75) # 0.75 is 4:3 resolution
         w_ratio = abs((img1_height + img2_height)  / max_width - 0.75)
 
@@ -154,7 +155,7 @@ class MakeMontage:
         left_oimg = cv2.resize(left_oimg, (left_width, height), interpolation=self.interpolation)
         right_oimg = cv2.resize(right_oimg, (right_width, height), interpolation=self.interpolation)
         # print("\n[RESIZED] SIZES:", left_oimg.shape, right_oimg.shape)
-        
+
         merge_mark = int(min(left_oimg.shape[1], right_oimg.shape[1]) * self.merge_pct) # left width
         left_img = left_oimg[:, :-merge_mark, :]
         right_img = right_oimg[:, merge_mark:, :]
@@ -212,7 +213,7 @@ class MakeMontage:
             # ])
             # print("HIST VAL:", hists)
         return _output
-                
+
     def compute_image_roi(self, images:dict, min_size=(128,128)) -> Tuple[dict, dict]:
         # Save original images sizes for E_rep computation
         original_image_sizes = {name:img.shape for name, img in images.items()}
@@ -241,7 +242,7 @@ class MakeMontage:
             # dilated = cv2.cvtColor(dilated, cv2.COLOR_GRAY2RGB)
             # cv2.rectangle(dilated, (x,y), (x+w, y+h), (0,255,0), 5)
             # # Crop image to salient region
-            # if success and (img.shape[:-1] >= min_size): 
+            # if success and (img.shape[:-1] >= min_size):
             #     images[img_name] = dilated
             # -------------------------------------------------------------
 
@@ -285,7 +286,7 @@ class MakeMontage:
             leftcol = np.mean(sum(img[:, 0, :] / 255.))
             e_trans_dict[img_name] = toprow + leftcol
         return e_trans_dict
-    
+
     # ! DID NOT WORKED WELL. POOR DETECTION:
     # def compute_image_objectness(self, images:dict, max_detections:int=100) -> dict:
     #     # https://www.programmersought.com/article/98723609770/
@@ -301,6 +302,6 @@ class MakeMontage:
     #             color = np.random.randint(0, 255, size=(3,))
     #             color = [int(c) for c in color]
     #             cv2.rectangle(output, (startX, startY), (endX, endY), color, 2)
-    #         if success: 
+    #         if success:
     #             images[img_name] = output
     #     return images

@@ -1,7 +1,7 @@
 import os, io, cv2
 import numpy as np
 from flask import Flask, config, render_template, request, make_response, url_for, redirect
-from .merge_images import *
+from .main import *
 
 def create_app(test_config=None):
     # create and configure the app
@@ -29,14 +29,14 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-    
+
     global images
     images = {}
     OUTPUT_PATH = "flaskr/static/imgs/processed.png"
 
     @app.route('/', methods=["POST", "GET"])
     def homepage():
-        # https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask        
+        # https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask
         if request.files:
             #TODO: Securing file uploads, go to section with same name in https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask
             for image in request.files.getlist("file"):
@@ -81,7 +81,7 @@ def create_app(test_config=None):
         if req["remove"] == "remove":
             if os.path.exists(OUTPUT_PATH):
                 os.remove(OUTPUT_PATH)
-        return make_response({"status": 200}, 200)  
+        return make_response({"status": 200}, 200)
 
     return app
 
