@@ -1,1 +1,1 @@
-# Auto-Sorted Images Stitching
+# Auto Photo Montage / Collage Maker
