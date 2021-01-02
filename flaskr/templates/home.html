@@ -7,13 +7,33 @@
     <title>ASIS Homepage</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.css">
+    <link rel="stylesheet" href="/static/css/loader.css">
 </head>
 
-<body>
+<body class="container-fluid">
     <div class="container-fluid text-center">
         <h2>Auto Photo Montage</h2>
         <hr>
     </div>
+    <div class="row">
+        <div class="col">
+            <h5>Instructions:</h5>
+            <ol>
+                <li>Add images from your device to <b>input</b> section</li>
+                <li>Click on the <span style="background-color:green; color: white;">RUN</span> button to start.</li>
+                <li>After a while, final image will appear in the <b>output</b> section.</li>
+                <li>Download or right click on the output image for more options.</li>
+            </ol>
+        </div>
+        <div class="col">
+            <h5>More details:</h5>
+            <ul>
+                <li><span><a href="#">Read full article</a></span></li>
+                <li><span><a href="#">GitHub code repository</a></span></li>
+            </ul>
+        </div>
+    </div>
+
     <div class="row mt-4 container-fluid">
         <div class="col">
             <h3>Input</h3>
@@ -22,95 +42,26 @@
             </div>
         </div>
         <div class="col-md-auto text-center align-self-md-center">
-            <button type="button" class="btn btn-success shadow" onclick=makePortraitMontage()>Make Portrait Montage</button>
-            <br><br>
-            <button type="button" class="btn btn-info shadow" onclick=makeLandscapeMontage()>Make Landscape Montage</button>
+            <button type="button" class="btn btn-success shadow" onclick=startProcessing()>RUN</button>
         </div>
         <div class="col">
             <h3>Output</h3>
-            <div class="container-fluid" id="outputID">
+            <div class="container-fluid text-center" id="outputID">
                 <!-- Processed image will appear here -->
             </div>
-            <!-- <img src="/static/imgs/processed.png" alt="Italian Trulli"> -->
-            <!-- <div class="container">
-                {% for message in get_flashed_messages() %}
-                <div class="alert alert-warning">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button> {{ message }}
-                </div>
-                {% endfor %} {% block page_content %}{% endblock %}
-            </div> -->
         </div>
     </div>
 
     <!-- JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
-    <script type="text/javascript">
-        // Remove previously generated output
-        fetch(`${window.origin}/checks`, {
-            method: "POST",
-            credentials: "include",
-            body: JSON.stringify({
-                "remove": "remove"
-            }),
-            cache: "no-cache",
-            headers: new Headers({
-                "content-type": "application/json"
-            })
-        })
 
+    <!-- Custom -->
+    <script src="/static/js/utils.js"></script>
 
-        function makePortraitMontage() {
-            startProcessing(orientation = "portrait")
-        }
-
-        function makeLandscapeMontage() {
-            startProcessing(orientation = "landscape")
-        }
-
-        function displayOutputImage() {
-            var outputImg = document.createElement("img")
-            outputImg.src = "/static/imgs/processed.png";
-            outputImg.style = "max-width:100%; max-height:35rem;";
-            outputImg.alt = "Output.png";
-            console.log("outputImg:", outputImg);
-            document.getElementById("outputID").appendChild(outputImg);
-        }
-
-        function startProcessing(orientation) {
-
-            var entry = {
-                "runButton": "clicked",
-                "orientation": orientation
-            };
-
-            fetch(`${window.origin}/output`, {
-                method: "POST",
-                credentials: "include",
-                body: JSON.stringify(entry),
-                cache: "no-cache",
-                headers: new Headers({
-                    "content-type": "application/json"
-                })
-            }).then(function(response) {
-                if (response.status !== 200) {
-                    console.log("Error! Response not 200.")
-                }
-
-                response.json().then(function(data) {
-                    // console.log(data);
-                    if (data.num_images < 2) {
-                        alert("At least 2 images are required.")
-                    } else if (data.processing_complete === true) {
-                        displayOutputImage()
-                            // alert("Processing complete")
-                    }
-                });
-            });
-        }
-    </script>
+    <footer class="container-fluid text-right mt-5 mb-5">
+        &copy
+        <a href="https://virksaab.github.io/">Jitender Singh Virk</a>
+    </footer>
 </body>
 
 </html>

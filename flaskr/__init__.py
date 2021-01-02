@@ -59,7 +59,7 @@ def create_app(test_config=None):
             processing_complete = False
             #TODO: Add processing function here
             if num_images >= 2:
-                output_image = make_collage(images, req["orientation"])
+                output_image = make_collage(images)
                 print(f"OUTPUT IMAGE: {output_image.shape}")
                 cv2.imwrite(OUTPUT_PATH, output_image)
                 processing_complete = True
@@ -79,7 +79,8 @@ def create_app(test_config=None):
     def check_before_running():
         req = request.get_json()
         if req["remove"] == "remove":
-            os.remove(OUTPUT_PATH)
+            if os.path.exists(OUTPUT_PATH):
+                os.remove(OUTPUT_PATH)
         return make_response({"status": 200}, 200)  
 
     return app
