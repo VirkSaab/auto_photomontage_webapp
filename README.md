@@ -1,8 +1,8 @@
-# Auto Photo Montage / Collage Maker
+# Auto Photo Montage / Collage Maker Web App
 
 [![Github Gist](https://img.shields.io/badge/python_anywhere-Live-blue)](add_live_link)
 
-This project is based on the MicroSoft research paper mentioned below. Some formulas in the implemented code is different than mentioned paper. 
+This project is based on the MicroSoft research paper mentioned below. Some formulas in the implemented code is different than mentioned paper.
 
 **A full article/report of this project is available [here](TermPaperLink)**.
 
