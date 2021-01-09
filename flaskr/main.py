@@ -5,7 +5,7 @@ Github ID: VirkSaab
 Last updated: 2 Jan 2021
 """
 from typing import Tuple
-import cv2
+import cv2, os
 import numpy as np
 from collections import OrderedDict
 
@@ -256,7 +256,9 @@ class MakeMontage:
     def compute_image_objectness(self, images:dict) -> dict:
         # Face detection
         faces_ratio_dict = {}
-        face_cascade = cv2.CascadeClassifier('flaskr/static/haarcascade_frontalface_default.xml')
+        # 'flaskr/static/haarcascade_frontalface_default.xml'
+        face_cascade = cv2.CascadeClassifier(os.path.join(cv2.data.haarcascades, "haarcascade_frontalface_default.xml"))
+
         for img_name in images.keys():
             img = images[img_name]
             oh, ow, _ = img.shape
