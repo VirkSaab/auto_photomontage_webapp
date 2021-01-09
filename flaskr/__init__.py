@@ -32,7 +32,7 @@ def create_app(test_config=None):
 
     global images
     images = {}
-    OUTPUT_DIR = "flaskr/static/imgs"
+    OUTPUT_DIR = f"{os.getcwd()}/flaskr/static/imgs"
     OUTPUT_PATH = f"{OUTPUT_DIR}/processed.png"
 
     @app.route('/', methods=["POST", "GET"])
@@ -63,6 +63,7 @@ def create_app(test_config=None):
                 output_image = make_collage(images)
                 print(f"OUTPUT IMAGE: {output_image.shape}")
                 if not os.path.exists(OUTPUT_DIR):
+                    print()
                     os.mkdir(OUTPUT_DIR)
                 cv2.imwrite(OUTPUT_PATH, output_image)
                 processing_complete = True
