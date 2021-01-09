@@ -1,4 +1,4 @@
-# Auto Photo Montage / Collage Maker Web App
+# Auto Photo Montage / Collage Web App
 
 [![Github Gist](https://img.shields.io/badge/python_anywhere-Live-blue)](add_live_link)
 

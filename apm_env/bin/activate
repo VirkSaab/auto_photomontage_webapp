@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/virk/Desktop/devs/Projects/auto_sorted_image_stitching/asis_env"
+VIRTUAL_ENV="/home/virk/Desktop/devs/Projects/auto_photo_montage_webapp/apm_env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
@@ -54,8 +54,8 @@ fi
 
 if [ -z "${VIRTUAL_ENV_DISABLE_PROMPT:-}" ] ; then
     _OLD_VIRTUAL_PS1="${PS1:-}"
-    if [ "x(asis_env) " != x ] ; then
-	PS1="(asis_env) ${PS1:-}"
+    if [ "x(apm_env) " != x ] ; then
+	PS1="(apm_env) ${PS1:-}"
     else
     if [ "`basename \"$VIRTUAL_ENV\"`" = "__" ] ; then
         # special case for Aspen magic directories
