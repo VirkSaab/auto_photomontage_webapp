@@ -10,4 +10,10 @@ This project is based on the MicroSoft research paper mentioned below. Some form
 
 * [**Read short paper here**](https://cumailin-my.sharepoint.com/:b:/g/personal/20mai1035_cuchd_in/EW2JuFrf7o1AjjZFFbV2gD0BbAdSZrjTIPBP8h4fvoReDw?e=bEIqyv)
 
+### WebApp Interface
+![Banner](mainfig.png)
+### Output
+![Banner](processed1.png)
+
+
 **Reference**: [Microsoft AutoCollage](https://www.microsoft.com/en-us/research/wp-content/uploads/2006/08/autocollage_rotheretal_siggraph2006.pdf)
