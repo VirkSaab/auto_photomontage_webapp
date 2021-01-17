@@ -1,9 +1,10 @@
 """
-Auto Photo Montage image processing file
+Auto Photomontage image processing file
 Author: Jitender Singh Virk
 Github ID: VirkSaab
 Last updated: 2 Jan 2021
 """
+
 from typing import Tuple
 import cv2, os
 import numpy as np
