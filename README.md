@@ -1,6 +1,6 @@
 # Auto Photomontage / Collage Web App
 
-[![Github Gist](https://img.shields.io/badge/python_anywhere-Live-blue)](add_live_link) [![Github Gist](https://img.shields.io/badge/GitHub-Follow@Virksaab-black)](https://github.com/VirkSaab)
+[![Github Gist](https://img.shields.io/badge/python_anywhere-Live-blue)](https://jsvirk47.pythonanywhere.com/) [![Github Gist](https://img.shields.io/badge/GitHub-Follow@Virksaab-black)](https://github.com/VirkSaab)
 
 This project is based on the MicroSoft research paper mentioned below. Some formulas in the implemented code is different than mentioned paper.
 
